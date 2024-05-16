@@ -28,6 +28,7 @@ public class JobServiceImpl implements JobService {
             if(job.getId().equals(id))
                 return job;
         }
+        System.out.print("object with this id not found");
         return null;
     }
 
