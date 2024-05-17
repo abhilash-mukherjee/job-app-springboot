@@ -1,5 +1,6 @@
 package com.learningSpringBoot.jobApp.company;
 
+import jakarta.validation.Valid;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.HttpStatusCode;
 import org.springframework.http.ResponseEntity;
@@ -27,8 +28,18 @@ public class CompanyController {
         }
     }
 
+    @GetMapping("/{id}")
+    public ResponseEntity<Company> getCompanyById(@PathVariable Long id){
+        try{
+            return new ResponseEntity<Company>(companyService.getCompanyById(id),HttpStatus.OK);
+        }
+        catch (Exception e){
+            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+        }
+    }
+
     @PostMapping
-    public ResponseEntity<String> createCompany(@RequestBody Company company){
+    public ResponseEntity<String> createCompany(@Valid @RequestBody Company company){
         try{
             companyService.createCompany(company);
             return new ResponseEntity<>("Company created successfully",HttpStatus.CREATED);
@@ -37,4 +48,6 @@ public class CompanyController {
             return new ResponseEntity<>("Failed to create company. Reason: " + e.getMessage(), HttpStatus.INTERNAL_SERVER_ERROR);
         }
     }
+
+
 }

@@ -2,6 +2,8 @@ package com.learningSpringBoot.jobApp.company;
 
 import com.learningSpringBoot.jobApp.job.Job;
 import jakarta.persistence.*;
+import jakarta.validation.constraints.NotBlank;
+import jakarta.validation.constraints.NotNull;
 
 import java.util.List;
 
@@ -10,7 +12,11 @@ public class Company {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
+    @NotBlank(message = "Company Name is mandatory")
+    @NotNull(message = "Company Name is mandatory")
     private String companyName;
+    @NotBlank(message = "Company description is mandatory")
+    @NotNull(message = "Company description is mandatory")
     private String companyDescription;
 
     @OneToMany
