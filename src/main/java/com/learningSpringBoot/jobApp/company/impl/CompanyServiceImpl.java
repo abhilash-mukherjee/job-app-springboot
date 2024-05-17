@@ -48,4 +48,30 @@ public class CompanyServiceImpl implements CompanyService {
             throw new RuntimeException("Company Not found");
         }
     }
+
+    @Override
+    public boolean updateCompany(Company updatedCompany, Long id) {
+        Optional<Company> companyOptional = companyRepository.findById(id);
+        if(companyOptional.isPresent()){
+            Company company = companyOptional.get();
+            company.setCompanyName(updatedCompany.getCompanyName());
+            company.setCompanyDescription(updatedCompany.getCompanyDescription());
+            companyRepository.save(company);
+            return true;
+        }
+        return false;
+    }
+
+    @Override
+    public boolean deleteCompany(Long id) {
+        if(companyRepository.findById(id).isEmpty())
+            return false;
+        try{
+            companyRepository.deleteById(id);
+            return true;
+        }
+        catch (Exception e){
+            return false;
+        }
+    }
 }

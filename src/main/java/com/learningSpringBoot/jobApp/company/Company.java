@@ -1,5 +1,6 @@
 package com.learningSpringBoot.jobApp.company;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.learningSpringBoot.jobApp.job.Job;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.NotBlank;
@@ -19,7 +20,8 @@ public class Company {
     @NotNull(message = "Company description is mandatory")
     private String companyDescription;
 
-    @OneToMany
+    @OneToMany(mappedBy = "company", cascade = CascadeType.ALL, orphanRemoval = true)
+    @JsonIgnore
     private List<Job> jobs;
     public Company(String companyName, String companyDescription) {
         this.companyName = companyName;
@@ -51,5 +53,13 @@ public class Company {
 
     public void setCompanyDescription(String companyDescription) {
         this.companyDescription = companyDescription;
+    }
+
+    public List<Job> getJobs() {
+        return jobs;
+    }
+
+    public void setJobs(List<Job> jobs) {
+        this.jobs = jobs;
     }
 }
