@@ -2,6 +2,7 @@ package com.learningSpringBoot.jobApp.company;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.learningSpringBoot.jobApp.job.Job;
+import com.learningSpringBoot.jobApp.review.Review;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
@@ -23,6 +24,10 @@ public class Company {
     @OneToMany(mappedBy = "company", cascade = CascadeType.ALL, orphanRemoval = true)
     @JsonIgnore
     private List<Job> jobs;
+
+    @OneToMany(mappedBy = "company", cascade = CascadeType.ALL, orphanRemoval = true)
+    @JsonIgnore
+    private List<Review> reviews;
     public Company(String companyName, String companyDescription) {
         this.companyName = companyName;
         this.companyDescription = companyDescription;
