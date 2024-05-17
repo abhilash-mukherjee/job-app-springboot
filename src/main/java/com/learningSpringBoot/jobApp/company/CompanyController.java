@@ -26,5 +26,15 @@ public class CompanyController {
             return new ResponseEntity<>(HttpStatus.NOT_FOUND);
         }
     }
-    
+
+    @PostMapping
+    public ResponseEntity<String> createCompany(@RequestBody Company company){
+        try{
+            companyService.createCompany(company);
+            return new ResponseEntity<>("Company created successfully",HttpStatus.CREATED);
+        }
+        catch (Exception e){
+            return new ResponseEntity<>("Failed to create company. Reason: " + e.getMessage(), HttpStatus.INTERNAL_SERVER_ERROR);
+        }
+    }
 }

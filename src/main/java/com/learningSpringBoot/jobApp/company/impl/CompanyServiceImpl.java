@@ -26,4 +26,14 @@ public class CompanyServiceImpl implements CompanyService {
             throw new RuntimeException("No companies found");
         }
     }
+
+    @Override
+    public void createCompany(Company company) {
+        try {
+            companyRepository.save(company);
+        }
+        catch (Exception e){
+            throw new RuntimeException(e.getMessage());
+        }
+    }
 }
