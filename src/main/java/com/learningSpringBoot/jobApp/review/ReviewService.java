@@ -8,4 +8,6 @@ public interface ReviewService {
     Review createReview(Long companyId, Review review);
 
     Review getReviewById(Long companyId, Long reviewId);
+
+    Review updateReview(Long companyId,Long reviewId, Review review);
 }

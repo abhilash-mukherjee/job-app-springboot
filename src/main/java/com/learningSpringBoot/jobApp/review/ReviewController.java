@@ -44,6 +44,22 @@ public class ReviewController {
         }
     }
 
+    @PutMapping("/{reviewId}")
+    public ResponseEntity<Review> updateReview(
+            @PathVariable Long companyId,
+            @PathVariable Long reviewId,
+            @Valid @RequestBody Review updatedReview
+    ){
+        try{
+            Review updateReview = reviewService.updateReview(companyId, reviewId, updatedReview);
+            return new ResponseEntity<Review>(updateReview, HttpStatus.CREATED);
+        }
+        catch (Exception e){
+            System.out.println(e.getMessage());
+            return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
+        }
+    }
+
     @GetMapping("/{reviewId}")
     public ResponseEntity<Review> getReviewById(@PathVariable Long companyId, @PathVariable Long reviewId){
         try {
