@@ -85,6 +85,28 @@ public class ReviewServiceImpl implements ReviewService {
         }
     }
 
+    @Override
+    public boolean deleteReview(Long companyId, Long reviewId) {
+        try{
+            Company company = companyService.getCompanyById(companyId);
+            Optional<Review> reviewOptional = reviewRepository.findById(reviewId);
+            if (reviewOptional.isPresent()) {
+                var review = reviewOptional.get();
+                if (company.equals(review.getCompany())) {
+                    reviewRepository.delete(review);
+                    return true;
+                } else {
+                    throw new RuntimeException("Review belongs to a different company");
+                }
+            } else {
+                throw new RuntimeException("Review not found");
+            }
+        }
+        catch (Exception e){
+            throw new RuntimeException(e.getMessage());
+        }
+    }
+
     public ReviewServiceImpl(ReviewRepository reviewRepository, CompanyService companyService) {
         this.reviewRepository = reviewRepository;
         this.companyService = companyService;

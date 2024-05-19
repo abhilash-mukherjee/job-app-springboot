@@ -60,6 +60,17 @@ public class ReviewController {
         }
     }
 
+    @DeleteMapping("/{reviewId}")
+    public ResponseEntity<String> deleteReview( @PathVariable Long companyId, @PathVariable Long reviewId){
+        try{
+            boolean deleted = reviewService.deleteReview(companyId, reviewId);
+            return new ResponseEntity<String>("Review Deleted", HttpStatus.CREATED);
+        }
+        catch (Exception e){
+            return new ResponseEntity<String>("Failed to delete " + e.getMessage(), HttpStatus.INTERNAL_SERVER_ERROR);
+        }
+    }
+
     @GetMapping("/{reviewId}")
     public ResponseEntity<Review> getReviewById(@PathVariable Long companyId, @PathVariable Long reviewId){
         try {
