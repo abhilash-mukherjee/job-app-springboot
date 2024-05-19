@@ -12,6 +12,11 @@ import java.util.List;
 public class ReviewController {
 
     private ReviewService reviewService;
+
+    public ReviewController(ReviewService reviewService) {
+        this.reviewService = reviewService;
+    }
+
     @GetMapping
     public ResponseEntity<List<Review>> getAlReviews(@PathVariable Long companyId){
         try{
@@ -20,6 +25,22 @@ public class ReviewController {
         }
         catch (Exception e){
             return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+        }
+    }
+
+    @PostMapping
+    public ResponseEntity<Review> createReview(@PathVariable Long companyId, @Valid @RequestBody Review review){
+        try{
+            System.out.println(
+                    "Review creation requested. Id: " + review.getId() +
+                            "Title: " + review.getReviewTitle() +
+                            "Description: " + review.getReviewDescription()
+            );
+            Review createdReview = reviewService.createReview(companyId, review);
+            return new ResponseEntity<Review>(createdReview, HttpStatus.CREATED);
+        }
+        catch (Exception e){
+            return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
         }
     }
 }

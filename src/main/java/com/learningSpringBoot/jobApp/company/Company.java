@@ -28,9 +28,11 @@ public class Company {
     @OneToMany(mappedBy = "company", cascade = CascadeType.ALL, orphanRemoval = true)
     @JsonIgnore
     private List<Review> reviews;
-    public Company(String companyName, String companyDescription) {
+    public Company(String companyName, String companyDescription, List<Job> jobs, List<Review> reviews) {
         this.companyName = companyName;
         this.companyDescription = companyDescription;
+        this.jobs = jobs;
+        this.reviews = reviews;
     }
 
     public Company() {
@@ -66,5 +68,13 @@ public class Company {
 
     public void setJobs(List<Job> jobs) {
         this.jobs = jobs;
+    }
+
+    public List<Review> getReviews() {
+        return reviews;
+    }
+
+    public void setReviews(List<Review> reviews) {
+        this.reviews = reviews;
     }
 }
